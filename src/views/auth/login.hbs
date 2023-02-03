@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-md-4 mx-auto">
+    <div class="card bg-black text-white">
+      <div class="card-header pt-5">
+        <h4 class="text-center">
+          Account Login
+        </h4>
+      </div>
+      <div class="card-body">
+        <form action="/auth/login" method="POST">
+          <div class="mb-3">
+            <label for="name">Usernameame:</label>
+            <input
+              type="text"
+              class="form-control bg-dark text-white"
+              name="username"
+              placeholder="Name"
+              value="{{user.username}}"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              class="form-control bg-dark text-white"
+              name="password"
+              placeholder="Password"
+              {{!-- value="{{password}}" --}}
+            />
+          </div>
+          <button class="btn btn-success btn-block">
+            Signup
+          </button>
+        </form>
+      </div>
+      <p class="text-center">Don't Have an Account? <a href="/auth/signup" class="text-info">Register</a></p>
+    </div>
+  </div>
+</div>
