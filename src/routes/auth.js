@@ -3,6 +3,8 @@ const router = express.Router()
 const Users = require('../models/users')
 const jwt = require('jsonwebtoken')
 const {encrypt, compare} = require('../helpers/handleBcrypt')
+const {validateUserCreate} = require('../validators/users') 
+const { matchedData } = require("express-validator");
 
 const secretKey = process.env.JWT_key
 
@@ -13,13 +15,17 @@ router.get('/signin', (req, res)=> {
     res.render('auth/signin');
 })
 
-router.post('/signin', async (req, res)=> {
+router.post('/signin', validateUserCreate, async (req, res)=> {
+    // console.log(req)
     console.log(req.body)
+    req = matchedData(req);
+    console.log(req)
+    // console.log(req.body)
     // console.log(typeof JSON.stringify(req.body));
     // console.log(JSON.stringify(req.body));
     // console.log(typeof JSON.parse(JSON.stringify(req.body)));
-    req.body.password = await encrypt(req.body.password)
-    const user = await Users.create(req.body)
+    req.password = await encrypt(req.password)
+    const user = await Users.create(req)
     // const users = await Users.findAll({raw: true})
     // console.log(users)
     res.send({user});
