@@ -15,8 +15,11 @@ router.get('/new-skill', checkAuth ,(req, res)=> {
     res.render('skills/new-skill');
 })
 
-router.post('/new-skill', async (req, res)=> {
+router.post('/new-skill', checkAuth ,async (req, res)=> {
     console.log(req.body);
+    // if (req.user.role === 'user'){
+    //     res.redirect('/skills/list');
+    // }
     await Skills.create(req.body)
     res.redirect('/skills/list');
 })

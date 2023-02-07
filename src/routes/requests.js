@@ -1,28 +1,18 @@
 const express = require('express');
 const Requests = require('../models/requests');
 const Users = require('../models/users');
-// const Skills = require('../models/skills')
-// const Users = require('../models/users')
-// const Responses = require('../models/response')
-// const Collaborations = require('../models/collaboration')
+const checkAuth = require('../middleware/auth')
+const {listar, new_request} = require('../controller/requests')
+
 const router = express.Router()
-// const Users = require('../models/users')
 
-router.get('/list', async (req, res)=> {
-    const requests = await Requests.findAll({raw:true})
-    console.log(requests)
-    res.render('requests/all-requests', {requests});
-})
+router.get('/list', listar)
 
-router.get('/new-request', (req, res)=> {
+router.get('/new-request', checkAuth ,(req, res)=> {
     res.render('requests/new-request');
 })
 
-router.post('/new-request', async (req, res)=> {
-    console.log(req.body);
-    await Requests.create(req.body)
-    res.send('lola');
-})
+router.post('/new-request', checkAuth , new_request)
 
 router.post('/edit-request/:id', async (req, res)=> {
     console.log(req.params);
