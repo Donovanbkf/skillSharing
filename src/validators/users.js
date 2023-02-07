@@ -1,6 +1,7 @@
 const { check } = require('express-validator')
 const { validateResult } = require("../helpers/helperValidator");
 const Users = require('../models/users');
+const {compare} = require('../helpers/handleBcrypt')
 
 const validateUserCreate = [
   check("name").exists().notEmpty(),
@@ -19,4 +20,23 @@ const validateUserCreate = [
   },
 ];
 
-module.exports = {validateUserCreate}
+const validateUserLogin = [
+    check("username").exists().notEmpty(),
+    check("password").exists().notEmpty().custom(async (value, {req}) => {
+        const user = await Users.findOne({raw:true, where: { username: req.body.username } });
+        req.user = user;
+        if (!user){
+           throw new Error(`User ${req.body.username} dont exists`);
+        }else{
+            if(!await compare(value, user.password)){
+                throw new Error(`Contraseña no valida`);
+            }
+        }
+        return true;
+      }),
+    (req, res, next) => {
+      validateResult(req, res, next);
+    },
+  ];
+
+module.exports = {validateUserCreate, validateUserLogin}

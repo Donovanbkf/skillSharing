@@ -3,31 +3,20 @@ const router = express.Router()
 const Users = require('../models/users')
 const jwt = require('jsonwebtoken')
 const {encrypt, compare} = require('../helpers/handleBcrypt')
-const {validateUserCreate} = require('../validators/users') 
+const {validateUserCreate, validateUserLogin} = require('../validators/users') 
 const { matchedData } = require("express-validator");
 
 const secretKey = process.env.JWT_key
 
 router.get('/signin', (req, res)=> {
-    // var ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
-    // console.log(req.connection.remoteAddress);
-    // console.log(req)
+
     res.render('auth/signin');
 })
 
 router.post('/signin', validateUserCreate, async (req, res)=> {
-    // console.log(req)
-    console.log(req.body)
     req = matchedData(req);
-    console.log(req)
-    // console.log(req.body)
-    // console.log(typeof JSON.stringify(req.body));
-    // console.log(JSON.stringify(req.body));
-    // console.log(typeof JSON.parse(JSON.stringify(req.body)));
     req.password = await encrypt(req.password)
     const user = await Users.create(req)
-    // const users = await Users.findAll({raw: true})
-    // console.log(users)
     res.send({user});
 })
 
@@ -35,28 +24,18 @@ router.get('/login', (req, res)=> {
     res.render('auth/login');
 })
 
-router.post('/login', async (req, res)=> {
-    // console.log(req.params);
-    const user = await Users.findOne({raw: true, where: {username: req.body.username}});
-    console.log(user)
+router.post('/login', validateUserLogin, async (req, res)=> {
+    let user = req.user
     if (user == null) {
-        // console.log('no esta')
         res.render('auth/signin');
     }else{
-        console.log(user.id);
         const compara = await compare(req.body.password, user.password);
-        console.log(req.body.password);
-        console.log(user.password);
         if (!compara){
-            console.log(compara)
             return res.render('auth/login', {user})
         }else{
             const id = user.id;
             const rol = user.role;
             const token = jwt.sign({ id, rol}, secretKey);
-            console.log(token);
-            // res.json(token);
-            // return res.render('skills/all-skills', { token });
             return res.send(token)
         }
     }
