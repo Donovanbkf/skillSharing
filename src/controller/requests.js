@@ -1,22 +1,34 @@
 const Requests = require('../models/requests');
+const { matchedData } = require("express-validator");
 
 const listar =  async (req, res)=> {
-    console.log(info) 
-    const requests = await Requests.findAll({raw:true})
-    // console.log(requests)
-    res.render('requests/all-requests', {requests});
+    const requests = await Requests.findAll({raw:true, where:{ user_id: req.user.id }})
+    // res.render('requests/all-requests', {requests});
+    res.send(requests)
+}
+
+const get_new_request = async (req, res)=> {
+    res.render('requests/new-request');
 }
 
 const new_request = async (req, res)=> {
-    console.log(req.body);
-    req.body.user_id = req.user.id
-    await Requests.create(req.body)
-    if (req.user.rol === 'user'){
-        info = req.user
-        res.redirect('/requests/list');
-    }
-    else{res.send('lola');}
+    user = req.user
+    req = matchedData(req)
+    req.user_id = user.id
+    await Requests.create(req)
+    res.redirect('/requests/list');
 }
 
+const get_edit_request = async (req, res)=> {
+    const request = await Requests.findOne({raw:true, where: {id: req.params.id}})
+    res.render('/requests/edit-request',{request});
+}
 
-module.exports = { listar, new_request}
+const edit_request = async (req, res)=> {
+    user = req.user
+    req = matchedData(req)
+    const request = await Requests.update({description: req.description, skill_id: req.id, user_id: user.id},{where: {id: id}})
+    res.send(request);
+}
+
+module.exports = { listar, get_new_request, new_request, get_edit_request, edit_request }
