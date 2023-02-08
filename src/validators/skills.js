@@ -4,6 +4,7 @@ const Skills = require('../models/skills');
 
 const validateSkillCreate = [
   check("asignature").exists().notEmpty(),
+  check("description").exists().notEmpty(),
   (req, res, next) => {
     validateResult(req, res, next);
   },
@@ -11,6 +12,7 @@ const validateSkillCreate = [
 
 const validateSkillEdit = [
   check("asignature").exists().notEmpty(),
+  check("description").exists().notEmpty(),
   // check("id").custom(async (value, {req}) => {
   //   const skill = await Skills.findOne({raw:true, where: { id: value } });
   //   req.skill = skill;

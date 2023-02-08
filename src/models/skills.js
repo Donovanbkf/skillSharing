@@ -12,6 +12,9 @@ const Skills = sequelize.define(
     asignature: {
       type: DataTypes.ENUM(["mates", "castellano", "ingles", "valenciano", "programacion"]),
     },
+    description: {
+      type: DataTypes.STRING,
+    },
   },
   {
     timestamps: true,
