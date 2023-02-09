@@ -25,6 +25,7 @@ const get_edit_request = async (req, res)=> {
 }
 
 const edit_request = async (req, res)=> {
+    let id = req.params.id
     user = req.user
     req = matchedData(req)
     const request = await Requests.update({description: req.description, skill_id: req.id, user_id: user.id},{where: {id: id}})

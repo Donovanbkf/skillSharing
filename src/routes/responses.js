@@ -1,42 +1,18 @@
 const express = require('express');
-const Responses = require('../models/response');
-// const Requests = require('../models/requests');
-// const Users = require('../models/users');
-// const Skills = require('../models/skills')
-// const Users = require('../models/users')
-// const Responses = require('../models/response')
-// const Collaborations = require('../models/collaboration')
+const {listar, get_new_response, new_response, get_edit_response, edit_response} = require('../controller/responses')
 const router = express.Router()
-// const Users = require('../models/users')
+const checkAuth = require('../middleware/auth')
+const { validateResponseCreate, validateResponseEdit } = require('../validators/responses')
 
-router.get('/list', async (req, res)=> {
-    const responses = await Responses.findAll({raw:true})
-    console.log(responses)
-    res.render('responses/all-responses', {responses});
-})
+router.get('/list', checkAuth(), listar)
 
-router.get('/new-response', (req, res)=> {
-    res.render('responses/new-response');
-})
+router.get('/new-response', checkAuth(), get_new_response)
 
-router.post('/new-response', async (req, res)=> {
-    console.log(req.body);
-    await Responses.create(req.body)
-    res.send('lola');
-})
+router.post('/new-response', checkAuth(), validateResponseCreate,new_response)
 
-router.get('/edit-response/:id', async (req, res)=> {
-    const response = await Responses.findOne({raw:true, where: {id: req.params.id}})
-    res.render('responses/edit-response', {response: response});
-})
+router.get('/edit-response/:id', checkAuth(), get_edit_response)
 
-router.post('/edit-response/:id', async (req, res)=> {
-    console.log(req.params);
-    console.log(req.body);
-    const description = req.body.description
-    await Responses.update({description: description},{where: {id: req.params.id}})
-    res.send('lola');
-})
+router.post('/edit-response/:id', checkAuth(), validateResponseEdit, edit_response)
 
 
 
