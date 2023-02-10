@@ -1,8 +1,7 @@
 const { sequelize } = require("../config/database");
 const { DataTypes } = require("sequelize");
 const Skills = require("./skills");
-const Requests = require("./requests");
-const Responses = require("./response");
+const Users = require("./users");
 
 const Collaborations = sequelize.define(
   "Collaborations",
@@ -25,20 +24,20 @@ const Collaborations = sequelize.define(
         key: 'id'
       }
     },
-    request_id: {
+    user_id_req: {
       type: DataTypes.INTEGER,
       references: {
         // This is a reference to another model
-        model: Requests,
+        model: Users,
         // This is the column name of the referenced model
         key: 'id'
       }
     },
-    response_id: {
+    user_id_res: {
       type: DataTypes.INTEGER,
       references: {
         // This is a reference to another model
-        model: Responses,
+        model: Users,
         // This is the column name of the referenced model
         key: 'id'
       }
