@@ -5,13 +5,9 @@ const Collaborations = require('../models/collaboration');
 
 const listar =  async (req, res)=> {
     const collaborations = await Collaborations.findAll({raw:true})
-    // res.render('requests/all-requests', {requests});
     res.send(collaborations)
 }
 
-// const get_new_collaboration = async (req, res)=> {
-//     res.render('requests/new-request');
-// }
 
 const new_collaboration_req = async (req, res)=> {
     user = req.user
@@ -21,8 +17,8 @@ const new_collaboration_req = async (req, res)=> {
     req.user_id_req = request.user_id
     req.user_id_res = user.id
     console.log(req)
-    await Collaborations.create(req)
-    res.redirect('/collaborations/list');
+    const collaboration = await Collaborations.create(req)
+    res.send(collaboration);
 }
 
 const new_collaboration_res = async (req, res)=> {
@@ -32,17 +28,11 @@ const new_collaboration_res = async (req, res)=> {
     const response = await Responses.findOne({raw:true, where: {id: response_id}})
     req.user_id_res = response.user_id
     req.user_id_req = user.id
-    console.log(req)
-    await Collaborations.create(req)
-    res.redirect('/collaborations/list');
+    const collaboration = await Collaborations.create(req)
+    res.send(collaboration);
 }
 
-// const get_edit_request = async (req, res)=> {
-//     const collaboration = await Collaborations.findOne({raw:true, where: {id: req.params.id}})
-//     res.render('/collaborations/edit-collaboration',{collaboration});
-// }
-
-const edit_collaboration = async (req, res)=> { // TODO
+const edit_collaboration = async (req, res)=> { 
     let id = req.params.id
     user = req.user
     req = matchedData(req)
@@ -51,4 +41,3 @@ const edit_collaboration = async (req, res)=> { // TODO
 }
 
 module.exports = { listar, new_collaboration_req, new_collaboration_res, edit_collaboration }
-// module.exports = { listar, new_collaboration_req, new_request, get_edit_request, edit_request }
