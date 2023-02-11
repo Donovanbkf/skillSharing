@@ -1,4 +1,4 @@
-const { check } = require('express-validator')
+const { check, body } = require('express-validator')
 const { validateResult } = require("../helpers/helperValidator");
 const Users = require('../models/users');
 const {compare} = require('../helpers/handleBcrypt')
@@ -8,7 +8,7 @@ const validateUserCreate = [
   check("username").exists().notEmpty().custom(async (value, {req}) => {
     const user = await Users.findOne({raw:true, where: { username: value } });
     if (user){
-      req.status = 409
+      req.status(409)
       throw new Error(`User ${value} already exists`);
     }
     return true;
@@ -22,8 +22,8 @@ const validateUserCreate = [
 ];
 
 const validateUserLogin = [
-    check("username").exists().notEmpty(),
-    check("password").exists().notEmpty().custom(async (value, {req}) => {
+    body("username").exists().withMessage('username no recibido').notEmpty(),
+    body("password").exists().notEmpty().custom(async (value, {req}) => {
         const user = await Users.findOne({raw:true, where: { username: req.body.username } });
         req.user = user;
         if (!user){

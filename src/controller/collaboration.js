@@ -5,7 +5,7 @@ const Collaborations = require('../models/collaboration');
 
 const listar =  async (req, res)=> {
     const collaborations = await Collaborations.findAll({raw:true})
-    res.send(collaborations)
+    res.status(200).send(collaborations)
 }
 
 
@@ -18,7 +18,7 @@ const new_collaboration_req = async (req, res)=> {
     req.user_id_res = user.id
     console.log(req)
     const collaboration = await Collaborations.create(req)
-    res.send(collaboration);
+    res.status(201).send(collaboration);
 }
 
 const new_collaboration_res = async (req, res)=> {
@@ -29,7 +29,7 @@ const new_collaboration_res = async (req, res)=> {
     req.user_id_res = response.user_id
     req.user_id_req = user.id
     const collaboration = await Collaborations.create(req)
-    res.send(collaboration);
+    res.status(201).send(collaboration);
 }
 
 const edit_collaboration = async (req, res)=> { 
@@ -37,7 +37,7 @@ const edit_collaboration = async (req, res)=> {
     user = req.user
     req = matchedData(req)
     const collaboration = await Collaborations.update({description: req.description, skill_id: req.id, user_id: user.id},{where: {id: id}})
-    res.send(collaboration);
+    res.status(200).send(collaboration);
 }
 
 module.exports = { listar, new_collaboration_req, new_collaboration_res, edit_collaboration }
