@@ -1,4 +1,4 @@
-const { check } = require('express-validator')
+const { check, body, validationResult } = require('express-validator')
 const { validateResult } = require("../helpers/helperValidator");
 const Users = require('../models/users');
 const {compare} = require('../helpers/handleBcrypt')
@@ -21,8 +21,8 @@ const validateUserCreate = [
 ];
 
 const validateUserLogin = [
-    check("username").exists().notEmpty(),
-    check("password").exists().notEmpty().custom(async (value, {req}) => {
+    body("username", "Ingrese username").exists().withMessage('no username').notEmpty().withMessage('esta vacio'),
+    body("password").exists().notEmpty().custom(async (value, {req}) => {
         const user = await Users.findOne({raw:true, where: { username: req.body.username } });
         req.user = user;
         if (!user){
@@ -35,7 +35,18 @@ const validateUserLogin = [
         return true;
       }),
     (req, res, next) => {
-      validateResult(req, res, next);
+      const errors = validationResult(req)
+      
+      if (!errors.isEmpty()) {
+          console.log(req.body)
+          const valores = req.body
+          const validaciones = errors.array()
+          console.log(validaciones)
+          res.render('auth/login', {validaciones:validaciones, valores: valores})
+      }else{
+          res.send('¡Validación Exitosa!')
+      }
+      
     },
   ];
 
