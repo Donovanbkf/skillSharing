@@ -8,7 +8,8 @@ const validateUserCreate = [
   check("username").exists().notEmpty().custom(async (value, {req}) => {
     const user = await Users.findOne({raw:true, where: { username: value } });
     if (user){
-       throw new Error(`User ${value} already exists`);
+      req.status = 409
+      throw new Error(`User ${value} already exists`);
     }
     return true;
   }),
@@ -26,11 +27,13 @@ const validateUserLogin = [
         const user = await Users.findOne({raw:true, where: { username: req.body.username } });
         req.user = user;
         if (!user){
-           throw new Error(`User ${req.body.username} dont exists`);
+          req.status = 404;
+          throw new Error(`User ${req.body.username} dont exists`);
         }else{
-            if(!await compare(value, user.password)){
-                throw new Error(`Contraseña no valida`);
-            }
+          if(!await compare(value, user.password)){
+            req.status = 401;
+            throw new Error(`Contraseña no valida`);
+          }
         }
         return true;
       }),
