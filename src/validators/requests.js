@@ -1,17 +1,17 @@
-const { check } = require('express-validator')
+const { check, body } = require('express-validator')
 const { validateResult } = require("../helpers/helperValidator");
 
 const validateRequestCreate = [
-  check("description").exists().notEmpty(),
-  check("skill_id").exists().notEmpty(),
+  body("description").exists().withMessage("description no recibido").notEmpty().withMessage("description vacío"),
+  body("skill_id").exists().withMessage("skill_id no recibido").notEmpty().withMessage("skill_id vacío"),
   (req, res, next) => {
     validateResult(req, res, next);
   },
 ];
 
 const validateRequestEdit = [
-  check("description").exists().notEmpty(),
-  check("skill_id").exists().notEmpty(),
+  body("description").exists().withMessage("description no recibido").notEmpty().withMessage("description vacío"),
+  body("skill_id").exists().withMessage("skill_id no recibido").notEmpty().withMessage("skill_id vacío"),
   (req, res, next) => {
     validateResult(req, res, next);
   },
