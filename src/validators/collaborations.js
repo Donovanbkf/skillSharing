@@ -1,6 +1,6 @@
 const { check, body, param } = require('express-validator')
 const { validateResult } = require("../helpers/helperValidator");
-const Responses = require('../models/response');
+
 
 const validateCollaborationCreate = [
   body("description").exists().withMessage("description no recibido").notEmpty().withMessage("description vacío"),
