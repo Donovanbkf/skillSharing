@@ -5,7 +5,10 @@ const Collaborations = require('../models/collaboration');
 
 const listar =  async (req, res)=> {
     const collaborations = await Collaborations.findAll({raw:true})
-    res.status(200).send(collaborations)
+    if (collaborations.length > 0) {
+        return res.status(200).send(collaborations)
+    }
+    res.status(204).send(collaborations)
 }
 
 
@@ -16,7 +19,6 @@ const new_collaboration_req = async (req, res)=> {
     const request = await Requests.findOne({raw:true, where: {id: request_id}})
     req.user_id_req = request.user_id
     req.user_id_res = user.id
-    console.log(req)
     const collaboration = await Collaborations.create(req)
     res.status(201).send(collaboration);
 }
