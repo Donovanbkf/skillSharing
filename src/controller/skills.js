@@ -4,7 +4,7 @@ const { matchedData } = require("express-validator");
 
 const listar = async (req, res)=> {
     const skills = await Skills.findAll({raw:true})
-    if (responses.length > 0) {
+    if (skills.length > 0) {
         return res.status(200).send(skills)
     }
     res.status(204).send(skills)
@@ -28,4 +28,4 @@ const delete_skill = async (req, res)=> {
     res.status(204).send(skill);
 }
 
-module.exports = { listar, get_new_skill, new_skill, get_edit_skill, edit_skill, delete_skill }
+module.exports = { listar, new_skill, edit_skill, delete_skill }
