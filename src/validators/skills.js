@@ -1,4 +1,4 @@
-const { body } = require('express-validator')
+const { body, param } = require('express-validator')
 const { validateResult } = require("../helpers/helperValidator");
 const Skills = require('../models/skills');
 
