@@ -18,7 +18,6 @@ const Responses = sequelize.define(
     skill_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true,
       references: {
         // This is a reference to another model
         model: Skills,
@@ -29,6 +28,7 @@ const Responses = sequelize.define(
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      unique: true,
       references: {
         // This is a reference to another model
         model: Users,
