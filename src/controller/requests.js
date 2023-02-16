@@ -25,4 +25,9 @@ const edit_request = async (req, res)=> {
     res.status(200).send(request);
 }
 
-module.exports = { listar, new_request, edit_request }
+const delete_request = async (req, res)=> { 
+    await Requests.destroy({where: {id: req.params.id}})
+    res.status(204).send();
+}
+
+module.exports = { listar, new_request, edit_request, delete_request }

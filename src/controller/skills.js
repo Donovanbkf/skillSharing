@@ -24,8 +24,8 @@ const edit_skill = async (req, res)=> {
 }
 
 const delete_skill = async (req, res)=> {
-    const skill = await Skills.destroy({where: {id: req.params.id}})
-    res.status(204).send(skill);
-}
+    await Skills.destroy({where: {id: req.params.id}})
+    res.status(204).send();
+} 
 
 module.exports = { listar, new_skill, edit_skill, delete_skill }

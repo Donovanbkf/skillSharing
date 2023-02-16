@@ -26,4 +26,9 @@ const edit_response = async (req, res)=> {
     res.status(200).send(response)
 }
 
-module.exports = {listar, new_response, edit_response}
+const delete_response = async (req, res)=> { 
+    await Responses.destroy({where: {id: req.params.id}})
+    res.status(204).send();
+}
+
+module.exports = {listar, new_response, edit_response, delete_response}

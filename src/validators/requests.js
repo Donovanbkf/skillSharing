@@ -30,4 +30,24 @@ const validateRequestEdit = [
   },
 ];
 
-module.exports = { validateRequestCreate, validateRequestEdit }
+const validateRequestDelete = [
+  param("id").exists().withMessage("id no recibido").notEmpty().withMessage("id vacío").custom(async (value, {req}) => {
+    const request = await Requests.findOne({raw:true, where: { id : value } });
+    if (request == null) {
+      req.status = 404
+      throw new Error(`requet actual no existe`);
+    }
+    else{ 
+      if (request.user_id != req.user.id && req.user.rol != 'admin'){
+        req.status = 403
+        throw new Error(`requet actual no te pertenece`);
+      }
+    }
+    return true;
+  }),
+  (req, res, next) => {
+    validateResult(req, res, next);
+  },
+]
+
+module.exports = { validateRequestCreate, validateRequestEdit, validateRequestDelete }

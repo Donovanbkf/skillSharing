@@ -42,4 +42,9 @@ const edit_collaboration = async (req, res)=> {
     res.status(200).send(collaboration);
 }
 
-module.exports = { listar, new_collaboration_req, new_collaboration_res, edit_collaboration }
+const delete_collaboration = async (req, res)=> { 
+    await Collaborations.destroy({where: {id: req.params.id}})
+    res.status(204).send();
+}
+
+module.exports = { listar, new_collaboration_req, new_collaboration_res, edit_collaboration, delete_collaboration }
