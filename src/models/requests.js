@@ -13,10 +13,11 @@ const Requests = sequelize.define(
     },
     description: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     skill_id: {
       type: DataTypes.INTEGER,
-  
+      allowNull: false,
       references: {
         // This is a reference to another model
         model: Skills,
@@ -26,7 +27,7 @@ const Requests = sequelize.define(
     },
     user_id: {
       type: DataTypes.INTEGER,
-  
+      allowNull: false,
       references: {
         // This is a reference to another model
         model: Users,

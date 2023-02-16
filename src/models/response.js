@@ -12,11 +12,12 @@ const Responses = sequelize.define(
         primaryKey: true
     },
     description: {
+      allowNull: false,
       type: DataTypes.STRING,
     },
     skill_id: {
       type: DataTypes.INTEGER,
-
+      allowNull: false,
       references: {
         // This is a reference to another model
         model: Skills,
@@ -26,6 +27,7 @@ const Responses = sequelize.define(
     },
     user_id: {
       type: DataTypes.INTEGER,
+      allowNull: false,
       references: {
         // This is a reference to another model
         model: Users,

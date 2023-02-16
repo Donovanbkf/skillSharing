@@ -19,12 +19,25 @@ const Users = sequelize.define(
       unique: true
     },
     fullname: {
+      allowNull: false,
       type: DataTypes.STRING,
     },
     password: {
+      allowNull: false,
       type: DataTypes.STRING,
     },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    saldo: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 5,
+    },
     role: {
+      allowNull: false,
       type: DataTypes.ENUM(["admin", "user"]),
     },
   },

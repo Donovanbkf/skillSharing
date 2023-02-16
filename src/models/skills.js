@@ -10,9 +10,11 @@ const Skills = sequelize.define(
         primaryKey: true
     },
     asignature: {
+      allowNull: false,
       type: DataTypes.ENUM(["mates", "castellano", "ingles", "valenciano", "programacion"]),
     },
     description: {
+      allowNull: false,
       type: DataTypes.STRING,
     },
   },
