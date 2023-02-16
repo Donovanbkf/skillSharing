@@ -28,6 +28,7 @@ const Requests = sequelize.define(
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      unique: true,
       references: {
         // This is a reference to another model
         model: Users,

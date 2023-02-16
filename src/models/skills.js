@@ -9,14 +9,28 @@ const Skills = sequelize.define(
         autoIncrement: true,
         primaryKey: true
     },
-    asignature: {
-      allowNull: false,
-      type: DataTypes.ENUM(["mates", "castellano", "ingles", "valenciano", "programacion"]),
-    },
     description: {
       allowNull: false,
       type: DataTypes.STRING,
     },
+    asignature: {
+      allowNull: false,
+      type: DataTypes.ENUM(["mates", "castellano", "ingles", "valenciano", "programacion"]),
+      unique: 'asignature_level'
+    },
+    level: {
+      allowNull: false,
+      type: DataTypes.ENUM(["principiante", "intermedio", "avanzado"]),
+      unique: 'asignature_level'
+    },
+  },
+  {
+    indexes: [
+      {
+        unique: true,
+        fields: ['asignature', 'level']
+      }
+    ]
   },
   {
     timestamps: true,
