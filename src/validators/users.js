@@ -13,6 +13,14 @@ const validateUserCreate = [
     }
     return true;
   }),
+  body("email").exists().withMessage('email no recibido').isEmail().withMessage('no es un email').custom(async (value, {req}) =>{
+    const user = await Users.findOne({raw:true, where: { email: value } });
+    if (user){
+      req.status = 409
+      throw new Error(`email ${value} already exists`);
+    }
+    return true;
+  }),
   body("fullname").exists().withMessage('fullname no recibido').notEmpty().isLength({min:5, max:20}).withMessage('tamaño incorrecto'),
   body("password").exists().withMessage('password no recibido').notEmpty(),
   body("role").isIn(["user", "admin"]).exists().withMessage('role no recibido'),

@@ -28,7 +28,6 @@ const Collaborations = sequelize.define(
     user_id_req: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true,
       references: {
         // This is a reference to another model
         model: Users,
@@ -39,13 +38,17 @@ const Collaborations = sequelize.define(
     user_id_res: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true,
       references: {
         // This is a reference to another model
         model: Users,
         // This is the column name of the referenced model
         key: 'id'
       }
+    },
+    state: {
+      allowNull: false,
+      type: DataTypes.ENUM(["iniciado", "terminado"]),
+      defaultValue: "iniciado",
     }
   },
   {

@@ -35,6 +35,11 @@ const Responses = sequelize.define(
         // This is the column name of the referenced model
         key: 'id'
       }
+    },
+    disponible:{
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true
     }
   },
   {

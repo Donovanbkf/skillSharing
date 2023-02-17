@@ -2,7 +2,7 @@ const Requests = require('../models/requests');
 const { matchedData } = require("express-validator");
 
 const listar =  async (req, res)=> {
-    const requests = await Requests.findAll({raw:true, where:{ user_id: req.user.id }})
+    const requests = await Requests.findAll({raw:true})
     if (requests.length > 0) {
         return res.status(200).send(requests)
     }
@@ -10,7 +10,7 @@ const listar =  async (req, res)=> {
 }
 
 const new_request = async (req, res)=> {
-    user = req.user
+    let user = req.user
     req = matchedData(req)
     req.user_id = user.id
     const request = await Requests.create(req)
@@ -19,9 +19,8 @@ const new_request = async (req, res)=> {
 
 const edit_request = async (req, res)=> {
     let id = req.params.id
-    user = req.user
     req = matchedData(req)
-    const request = await Requests.update({description: req.description, skill_id: req.skill_id, user_id: user.id},{where: {id: id}})
+    const request = await Requests.update({description: req.description, skill_id: req.skill_id},{where: {id: id}})
     res.status(200).send(request);
 }
 

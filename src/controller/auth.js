@@ -17,7 +17,8 @@ const login = async (req, res)=> {
     let user = req.user
     const id = user.id;
     const rol = user.role;
-    const token = jwt.sign({ id, rol }, secretKey);
+    const saldo = user.saldo;
+    const token = jwt.sign({ id, rol, saldo }, secretKey);
     return res.status(200).send(token)
 }
 

@@ -3,7 +3,7 @@ const Responses = require("../models/response");
 
 
 const listar = async (req, res)=> {
-    const responses = await Responses.findAll({raw:true, where:{user_id : req.user.id}})
+    const responses = await Responses.findAll({raw:true})
     if (responses.length > 0) {
         return res.status(200).send(responses)
     }
