@@ -1,2 +1,2 @@
 La carpeta helpers suele contener funciones y objetos que son específicos para una determinada sección o función de la aplicación.
-Por ejemplo, puede haber un archivo helpers/auth.js que contenga funciones para autenticar a los usuarios y proteger las rutas.
+Por ejemplo, puede haber un archivo helpers/auth.js que contenga funciones para autenticar a los usuarios y proteger las rutas. 
