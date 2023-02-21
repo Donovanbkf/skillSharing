@@ -1,3 +1,7 @@
+/**
+ * Controlador para la entidad de usuarios.
+ * @module CollaborationController
+ */
 const Requests = require('../models/requests');
 const Responses = require('../models/response');
 const { matchedData } = require("express-validator");
@@ -5,6 +9,14 @@ const Collaborations = require('../models/collaboration');
 const Users = require("../models/users");
 const {sendMail} = require("../helpers/helpermail")
 
+
+/**
+ * Listar collaboraciones
+ * @function
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} res - Objeto de respuesta de Express con las colaboraciones.
+ * @param {Object} req.user - Objeto de usuario con id, rol y saldo
+ */
 const listar =  async (req, res)=> {
     const collaborations = await Collaborations.findAll({raw:true})
     if (collaborations.length > 0) {
@@ -13,7 +25,14 @@ const listar =  async (req, res)=> {
     res.status(204).send(collaborations)
 }
 
-
+/**
+ * Crear collaboracion a partir del request
+ * @function
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} res - Objeto de respuesta de Express con la colaboracion.
+ * @param {string} req.params.id - El ID del requets que se acepta
+ * @param {Object} req.user - Objeto de usuario con id, rol y saldo
+ */
 const new_collaboration_req = async (req, res)=> {
     const user = req.user
     let request_id = req.params.id
@@ -34,6 +53,14 @@ const new_collaboration_req = async (req, res)=> {
     res.status(201).send(collaboration);
 }
 
+/**
+ * Crear collaboracion a partir del response
+ * @function
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} res - Objeto de respuesta de Express con la colaboracion.
+ * @param {string} req.params.id - El ID del response que se acepta
+ * @param {Object} req.user - Objeto de usuario con id, rol y saldo
+ */
 const new_collaboration_res = async (req, res)=> {
     const user = req.user
     let response_id = req.params.id
@@ -54,6 +81,14 @@ const new_collaboration_res = async (req, res)=> {
     res.status(201).send(collaboration);
 }
 
+/**
+ * Editar collaboracion 
+ * @function
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} res - Objeto de respuesta de Express con la colaboracion.
+ * @param {string} req.params.id - El ID del collaboration
+ * @param {Object} req.user - Objeto de usuario con id, rol y saldo
+ */
 const edit_collaboration = async (req, res)=> { 
     let id = req.params.id
     req = matchedData(req)
@@ -61,6 +96,14 @@ const edit_collaboration = async (req, res)=> {
     res.status(200).send(collaboration);
 }
 
+/**
+ * Crear collaboracion a partir del response
+ * @function
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @param {string} req.params.id - El ID del response que se acepta
+ * @param {Object} req.user - Objeto de usuario con id, rol y saldo
+ */
 const finish_collaboration = async (req, res)=> { 
     const collaboration = await Collaborations.findOne({where: {id: req.params.id}})
     await Collaborations.update({state: "terminado"},{where: {id: req.params.id}})
@@ -81,6 +124,14 @@ const finish_collaboration = async (req, res)=> {
     res.status(204).send();
 }
 
+/**
+ * Eliminar collaboracion a partir del response
+ * @function
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @param {string} req.params.id - El ID de la collaboration.
+ * @param {Object} req.user - Objeto de usuario con id, rol y saldo
+ */
 const delete_collaboration = async (req, res)=> { 
     const collaboration = await Collaborations.findOne({where: {id: req.params.id}})
     const id_req = collaboration.user_id_req

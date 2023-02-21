@@ -1,6 +1,13 @@
 const jwt = require('jsonwebtoken');
 
-
+/**
+ * Middleware que verifica si el usuario está autenticado y autorizado.
+ * @param {string} rol - El rol requerido ("admin" o nada).
+ * @param {object} req - El objeto de solicitud HTTP.
+ * @param {object} res - El objeto de respuesta HTTP.
+ * @param {function} next - Función para pasar el control al siguiente middleware/ruta.
+ * @returns {void}
+ */
 const checkAuth = (rol) => (req, res, next) => {
   if (!req.headers.authorization) {
     return res.status(401).send('no estas autorizado')

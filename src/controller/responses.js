@@ -1,7 +1,16 @@
+/**
+ * Controlador para la entidad de usuarios.
+ * @module ResponseController
+ */
 const { matchedData } = require("express-validator");
 const Responses = require("../models/response");
 
-
+/**
+ * Listar responses
+ * @function
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} res - Objeto de respuesta de Express con los responses.
+ */
 const listar = async (req, res)=> {
     const responses = await Responses.findAll({raw:true})
     if (responses.length > 0) {
@@ -10,6 +19,14 @@ const listar = async (req, res)=> {
     res.status(204).send(responses)
 }
 
+/**
+ * Crear response
+ * @function
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} res - Objeto de respuesta de Express con el response.
+ * @param {Object} req.body - Datos del response
+ * @param {Object} req.user - Objeto de usuario con id, rol y saldo
+ */
 const new_response = async (req, res)=> {
     user = req.user
     req = matchedData(req)
@@ -18,6 +35,15 @@ const new_response = async (req, res)=> {
     res.status(201).send(response)
 }
 
+/**
+ * Editar el response
+ * @function
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} res - Objeto de respuesta de Express con el response.
+ * @param {string} req.params.id - El ID del response que se edita
+ * @param {Object} req.body - Datos del response
+ * @param {Object} req.user - Objeto de usuario con id, rol y saldo
+ */
 const edit_response = async (req, res)=> {
     let id = req.params.id
     user = req.user
@@ -26,6 +52,14 @@ const edit_response = async (req, res)=> {
     res.status(200).send(response)
 }
 
+/**
+ * Eliminar el response
+ * @function
+ * @param {Object} req - Objeto de solicitud de Express.
+ * @param {Object} res - Objeto de respuesta de Express.
+ * @param {string} req.params.id - El ID del response que se edita
+ * @param {Object} req.user - Objeto de usuario con id, rol y saldo
+ */
 const delete_response = async (req, res)=> { 
     await Responses.destroy({where: {id: req.params.id}})
     res.status(204).send();
