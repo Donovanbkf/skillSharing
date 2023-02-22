@@ -87,6 +87,7 @@ const new_collaboration_res = async (req, res)=> {
  * @param {Object} req - Objeto de solicitud de Express.
  * @param {Object} res - Objeto de respuesta de Express con la colaboracion.
  * @param {string} req.params.id - El ID del collaboration
+ * @param {string} req.body.description - descripción de la collab
  * @param {Object} req.user - Objeto de usuario con id, rol y saldo
  */
 const edit_collaboration = async (req, res)=> { 
@@ -102,6 +103,8 @@ const edit_collaboration = async (req, res)=> {
  * @param {Object} req - Objeto de solicitud de Express.
  * @param {Object} res - Objeto de respuesta de Express.
  * @param {string} req.params.id - El ID del response que se acepta
+ * @param {string} req.body.description - descripción de la collab
+ * @param {int} req.body.saldo - horas de la collab
  * @param {Object} req.user - Objeto de usuario con id, rol y saldo
  */
 const finish_collaboration = async (req, res)=> { 

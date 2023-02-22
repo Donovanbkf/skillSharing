@@ -25,6 +25,9 @@ const listar = async (req, res)=> {
  * @param {Object} req - Objeto de solicitud de Express.
  * @param {Object} res - Objeto de respuesta de Express con el skill.
  * @param {Object} req.body - Datos del skill
+ * @param {string} req.body.asignature - nombre asignatura
+ * @param {string} req.body.description - Descripción de la skill
+ * @param {string} req.body.level - nivel de complejidad
  * @param {Object} req.user - Objeto de usuario con id, rol y saldo
  */
 const new_skill = async (req, res)=> {
@@ -40,6 +43,8 @@ const new_skill = async (req, res)=> {
  * @param {Object} res - Objeto de respuesta de Express con el skill.
  * @param {String} req.params.id - Id del skill
  * @param {Object} req.body - Datos del skill
+ * @param {string} req.body.asignature - nombre asignatura
+ * @param {string} req.body.description - Descripción de la skill
  * @param {Object} req.user - Objeto de usuario con id, rol y saldo
  */
 const edit_skill = async (req, res)=> {

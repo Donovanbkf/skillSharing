@@ -15,6 +15,11 @@ const secretKey = process.env.JWT_key
  * @function
  * @param {Object} req - Objeto de solicitud de Express.
  * @param {Object} req.body - Cuerpo de la solicitud con los datos del nuevo usuario.
+ * @param {string} req.body.name - nombre del usuario
+ * @param {string} req.body.username - Username del usuario
+ * @param {string} req.body.fullname - fullname del usuario
+ * @param {string} req.body.password - Contraseña del usuario
+ * @param {string} req.body.role - role del usuario
  * @param {Object} res - Objeto de respuesta de Express con el user creado.
  */
 const signin = async (req, res)=> {
@@ -29,6 +34,8 @@ const signin = async (req, res)=> {
  * @function
  * @param {Object} req - Objeto de solicitud de Express.
  * @param {Object} req.body - Cuerpo de la solicitud con los datos del nuevo usuario.
+ * @param {string} req.body.username - Username del usuario
+ * @param {string} req.body.password - Contraseña del usuario
  * @param {Object} res - Objeto de respuesta de Express con el token creado con JWT.
  */
 const login = async (req, res)=> {

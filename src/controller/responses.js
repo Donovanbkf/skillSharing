@@ -25,6 +25,8 @@ const listar = async (req, res)=> {
  * @param {Object} req - Objeto de solicitud de Express.
  * @param {Object} res - Objeto de respuesta de Express con el response.
  * @param {Object} req.body - Datos del response
+ * @param {string} req.body.description - descripcion del response
+ * @param {int} req.body.skill_id - id del skill
  * @param {Object} req.user - Objeto de usuario con id, rol y saldo
  */
 const new_response = async (req, res)=> {
@@ -42,6 +44,7 @@ const new_response = async (req, res)=> {
  * @param {Object} res - Objeto de respuesta de Express con el response.
  * @param {string} req.params.id - El ID del response que se edita
  * @param {Object} req.body - Datos del response
+ * @param {string} req.body.description - descripcion del response
  * @param {Object} req.user - Objeto de usuario con id, rol y saldo
  */
 const edit_response = async (req, res)=> {
